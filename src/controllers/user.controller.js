@@ -1,4 +1,4 @@
-const User = require("../models/User.model");
+const User = require("../models/user.model");
 
 const notFound = (res) => res.status(404).json({ message: "User not found" });
 

@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./src/config/mongoose-connection');
 const errorHandler = require('./src/middleware/errorHandler');
 const userRouter = require('./src/routes/user.routes');
+const authRouter = require('./src/routes/auth.routes');
 require('dotenv').config();
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 connectDB();
 
 app.use('/api/users', userRouter);
+app.use('/api/auth', authRouter);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
