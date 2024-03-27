@@ -29,15 +29,18 @@ const getUserById = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     const {
-      body: { name, email, password },
+      body: { name, email, password, role },
     } = req;
+
+    
 
     const newUser = new User({
       name,
       email,
       password,
+      role,
     });
-
+    
     await newUser.save();
 
     const response = {
@@ -48,6 +51,7 @@ const createUser = async (req, res, next) => {
 
     res.status(201).json(response);
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
