@@ -7,10 +7,10 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = password ? await bcrypt.compare(password, user.password) : null;
 
     if (!user || !isPasswordMatch) {
-      return res.status(401).json({ message: "Incorrect email or password" });
+      return res.status(401).json({ message: "Invalid email or password" });
     }
 
     const token = jwt.sign({ id: user_id }, process.env.JWT_SECRET, {
@@ -19,6 +19,7 @@ const login = async (req, res, next) => {
 
     res.json({ token });
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
