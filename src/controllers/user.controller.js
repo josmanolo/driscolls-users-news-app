@@ -32,8 +32,6 @@ const createUser = async (req, res, next) => {
       body: { name, email, password, role },
     } = req;
 
-    
-
     const newUser = new User({
       name,
       email,
@@ -58,7 +56,10 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const updateData = { ...req.body };
+    delete updateData._id; 
+
+    const user = await User.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     });
     if (!user) {
@@ -66,6 +67,7 @@ const updateUser = async (req, res, next) => {
     }
     res.json(user);
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
